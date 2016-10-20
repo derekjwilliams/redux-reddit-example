@@ -2,12 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { selectReddit, fetchPostsIfNeeded, invalidateReddit } from '../actions';
 import Picker from '../components/Picker';
+import SearchEntry from '../components/SearchEntry';
 import Posts from '../components/Posts';
 
 class AsyncApp extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleRefreshClick = this.handleRefreshClick.bind(this);
   }
 
@@ -26,6 +28,9 @@ class AsyncApp extends Component {
   handleChange(nextReddit) {
     this.props.dispatch(selectReddit(nextReddit));
   }
+  handleSearchChange(nextReddit) {
+    this.props.dispatch(selectReddit(nextReddit));
+  }
 
   handleRefreshClick(e) {
     e.preventDefault();
@@ -39,6 +44,8 @@ class AsyncApp extends Component {
     const { selectedReddit, posts, isFetching, lastUpdated } = this.props;
     return (
       <div>
+        <SearchEntry value={selectedReddit}
+                onChange={this.handleSearchChange} />
         <Picker value={selectedReddit}
                 onChange={this.handleChange}
                 options={['reactjs', 'elixir', 'emberjs']} />
